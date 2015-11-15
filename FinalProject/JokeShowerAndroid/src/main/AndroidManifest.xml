@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="mobi.vhly.jokeshowerandroid.lib" >
+
+    <application
+        android:allowBackup="true">
+        <activity
+            android:name=".JokeShowerActivity"
+            android:label="@string/joke_shower" >
+        </activity>
+    </application>
+
+</manifest>
