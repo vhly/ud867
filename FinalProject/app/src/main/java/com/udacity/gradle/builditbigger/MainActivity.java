@@ -1,17 +1,20 @@
 package com.udacity.gradle.builditbigger;
 
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
-import mobi.vhly.jokes.Joke;
+
+import mobi.vhly.jokeshowerandroid.lib.Constants;
 import mobi.vhly.jokeshowerandroid.lib.JokeShowerActivity;
 
+public class MainActivity extends AppCompatActivity implements TaskCallback {
 
-public class MainActivity extends ActionBarActivity {
+    private boolean loading;
+
+    private boolean resume;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,20 +45,57 @@ public class MainActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void tellJoke(View view){
+    @Override
+    protected void onResume() {
+        super.onResume();
+        resume = true;
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        resume = false;
+    }
+
+    public void tellJoke(View view) {
 
         // Get Joke content form Java Library class define.
-        String jokeContent = Joke.getJokeContent();
+//        String jokeContent = Joke.getJokeContent();
+//
+//        if (jokeContent == null) {
+//            jokeContent = "Empty Joke";
+//        }
+//
+//        // Show Activity from JokeShowerAndroid Android Library
+//        Intent intent = new Intent(this, JokeShowerActivity.class);
+//
+//        startActivity(intent);
 
-        if (jokeContent == null) {
-            jokeContent = "Empty Joke";
+        if (!loading) {
+
+            JokeTask task = new JokeTask(this);
+            task.execute();
+            loading = true;
+
         }
 
-        // Show Activity from JokeShowerAndroid Android Library
-        Intent intent = new Intent(this, JokeShowerActivity.class);
-
-        startActivity(intent);
     }
 
 
+    @Override
+    public void onTaskResult(Object result) {
+        if (result != null) {
+            loading = false;
+            if (resume) {
+                // TODO Show Activity
+
+                // Show Activity from JokeShowerAndroid Android Library
+                Intent intent = new Intent(this, JokeShowerActivity.class);
+                intent.putExtra(Constants.INTENT_KEY_JOKE_CONTENT, result.toString());
+                startActivity(intent);
+
+            }
+
+        }
+    }
 }
