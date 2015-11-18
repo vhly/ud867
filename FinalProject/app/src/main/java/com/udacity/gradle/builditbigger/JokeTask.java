@@ -42,7 +42,15 @@ public class JokeTask extends AsyncTask<String, String, String> {
                 null
         );
 
-        builder.setRootUrl("http://10.0.2.2:8080/_ah/api/")
+        String rootUrl = null;
+        rootUrl = "http://10.0.2.2:8080/_ah/api/";
+
+        // Use Gradle buildType for Debug and release api url
+        if (!BuildConfig.DEBUG) { // release version
+            rootUrl = "https://jokeserver-1133.appspot.com/_ah/api/";
+        }
+
+        builder.setRootUrl(rootUrl)
                 .setGoogleClientRequestInitializer(new GoogleClientRequestInitializer() {
                     @Override
                     public void initialize(AbstractGoogleClientRequest<?> abstractGoogleClientRequest) throws IOException {
