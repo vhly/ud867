@@ -75,6 +75,16 @@ public class JokeTask extends AsyncTask<String, String, String> {
     }
 
     @Override
+    protected void onPreExecute() {
+        if (reference != null) {
+            TaskCallback taskCallback = reference.get();
+            if (taskCallback != null) {
+                taskCallback.onTaskPrepare();
+            }
+        }
+    }
+
+    @Override
     protected void onPostExecute(String s) {
         if (reference != null) {
             TaskCallback taskCallback = reference.get();

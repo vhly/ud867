@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ProgressBar;
 
 import mobi.vhly.jokeshowerandroid.lib.Constants;
 import mobi.vhly.jokeshowerandroid.lib.JokeShowerActivity;
@@ -16,10 +17,14 @@ public class MainActivity extends AppCompatActivity implements TaskCallback {
 
     private boolean resume;
 
+    private ProgressBar pb;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        pb = (ProgressBar) findViewById(R.id.pb_indicator);
     }
 
 
@@ -81,6 +86,12 @@ public class MainActivity extends AppCompatActivity implements TaskCallback {
 
     }
 
+    @Override
+    public void onTaskPrepare() {
+        if (pb != null) {
+            pb.setVisibility(View.VISIBLE);
+        }
+    }
 
     @Override
     public void onTaskResult(Object result) {
@@ -88,6 +99,10 @@ public class MainActivity extends AppCompatActivity implements TaskCallback {
             loading = false;
             if (resume) {
                 // TODO Show Activity
+
+                if (pb != null) {
+                    pb.setVisibility(View.INVISIBLE);
+                }
 
                 // Show Activity from JokeShowerAndroid Android Library
                 Intent intent = new Intent(this, JokeShowerActivity.class);

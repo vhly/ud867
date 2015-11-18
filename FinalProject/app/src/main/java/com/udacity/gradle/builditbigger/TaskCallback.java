@@ -10,4 +10,5 @@ public interface TaskCallback {
 
     void onTaskResult(Object result);
 
+    void onTaskPrepare();
 }

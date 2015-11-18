@@ -20,6 +20,20 @@ android {
         }
     }
 
+    productFlavors {
+
+        free{
+            applicationId "com.udacity.gradle.builditbigger.free"
+        }
+
+        paid {
+
+            applicationId "com.udacity.gradle.builditbigger.paid"
+
+        }
+
+    }
+
 }
 
 dependencies {
@@ -39,4 +53,6 @@ dependencies {
 
 
     compile 'com.android.support:multidex:1.0.0'
+
+    testCompile 'junit:junit:4.12'
 }
