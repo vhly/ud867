@@ -24,7 +24,7 @@ task autotest {
     description 'Test GCE Server and Android joke test.'
     group 'Test'
 
-    dependsOn ":backend:appenginRun", ":app:test"
+    dependsOn ":backend:assemble", ":app:test"
 
     doLast {
 
