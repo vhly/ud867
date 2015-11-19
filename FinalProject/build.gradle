@@ -17,3 +17,19 @@ allprojects {
         jcenter()
     }
 }
+
+
+task autotest {
+
+    description 'Test GCE Server and Android joke test.'
+    group 'Test'
+
+    dependsOn ":backend:appenginRun", ":app:test"
+
+    doLast {
+
+       println("Auto Test")
+
+    }
+
+}
